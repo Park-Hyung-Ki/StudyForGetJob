@@ -1,0 +1,18 @@
+create table t_body (
+	id			integer 		primary key,
+	name		varchar2(500)	not null,
+	addr		varchar2(500)	not null
+);
+
+create table t_arm (
+	body_id		integer,
+	lr			integer not null,
+	leng		integer,
+	primary key(body_id, lr)
+);
+
+insert into t_body values(1, '홍길동', '한양 1번지');
+insert into t_body values(2, '이순신', '서산 1번지');
+
+insert into t_arm values(2, 1, 120);
+insert into t_arm values(2, 2, 130);
