@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JS Game</title>
+<style>
+
+canvas {
+	border: 1px dotted red;
+	background-color: #fcff00;
+}
+</style>
+<script>
+	var ballX, ballY, ballRadius; //포탄의 초기 위치 및 크기
+	var ballVX, ballVY; //포탄의 X축 및 Y축 현재속도
+	var context; // 붓
+	var groundImg = new Image();	//땅
+	groundImg.src = "lawn.jpg";
+	var targetImg = new Image();	//목표물
+	targetImg.src = "target.jpg";
+	
+	var timer;
+	var score = 0;
+	
+	function init() {
+		ballX = 10;
+		ballY = 250;
+		ballRadius = 10;
+		context = document.getElementById("canvas").getContext('2d');
+		draw(); // draw 함수를 사용한다. 이제 아래에서 정의 시작
+	}
+
+	function draw() {
+		context.clearRect(0, 0, 500, 300);
+		drawBall();
+		drawBackground();
+	}
+	
+	function drawBall() {
+		context.beginPath();	//그리기 경로 출발점 지정
+		context.arc(ballX, ballY, ballRadius, 0, 2.0 * Math.PI, true);
+		context.fillStyle = "red";
+		context.fill();
+	}
+	
+	function drawBackground() {
+		context.drawImage(groundImg, 0, 270);
+		context.drawImage(targetImg, 450, 60, 50, 80);
+	}
+	
+	function start() {
+		init();	//다시 쏠 때 처음 위치 잡기
+		//포의  초기 발사 속도 및 각도
+		var velocity , angle;
+		velocity = new Number(document.getElementById("velocity").value);
+		console.info("velocity" + velocity);
+		angle = new Number(document.getElementById("angle").value);
+		console.info("angle" + angle);
+		
+		radianAngle = degrees_to_radians(angle);
+		ballVX = velocity * Math.cos(radianAngle); 
+		ballVY = -velocity * Math.sin(radianAngle);
+		
+		timer = setInterval(fly, 100);
+	}
+	
+	function degrees_to_radians(degrees) {
+		return degrees * (Math.PI/180);	
+	}
+	
+	function fly() {
+		ballVY += 0.98;
+		ballX += ballVX;
+		ballY += ballVY;
+		
+		//목표물에 도달
+		if (ballX >= 450 && ballX <= 500 && ballY >= 60 && ballY <= 140) {
+			score++;
+			document.getElementById("score").innerHTML = "점수 = " + score;
+			clearInterval(timer);
+		}
+		//땅에 닿아버렸네요
+		if (ballY > 300) {
+			clearInterval(timer);
+		}
+		draw();
+	}
+</script>
+</head>
+<body onload="init();">
+	<canvas id = "canvas" width="500" height="300"></canvas>
+	<div>
+		속도<input id="velocity" type="number" min="0" max="100" step="1"> 
+		각도<input id="angle" type="number" min="0" max="89" step="1">
+		<div id="score">점수 = 0</div>
+		<input type="button" value="발사" onclick="start();">
+	</div>
+</body>
+</html>
