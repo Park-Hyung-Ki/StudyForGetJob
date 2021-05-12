@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- 여기서 말하고자 하는건 Factory와 비슷한 느낌 필요한 요소들 준비해놓을 테니까 사용하고 싶을때 꺼내서 사용해라. -->
+<Beans> <!-- 2 -->
+	<Bean> <!-- 1 -->
+		<Name>STV</Name>
+		<Path>step5_DFAnnotation.STV</Path> <!-- 정보를 불러오기위해 경로 정보가 있어야 한다. --> <!-- 4 --> 
+	</Bean> <!-- beanName이라는 Meta용어(이곳에서) -->
+	<Bean>
+		<Name>LTV</Name>
+		<Path>step5_DFAnnotation.LTVAdapter</Path> <!-- 5 -->
+	</Bean> <!--  위와 같은 설정 정보들을 받아들여서 호출할 정보를 준비해야한다. --> <!-- 3 -->
+	<Bean>
+		<Name>HTV</Name>
+		<Path>step5_DFAnnotation.HTV</Path> <!-- 6 -->
+	</Bean>
+	<Bean>
+		<Name>TV_UserAnno</Name>
+		<Path>step5_DFAnnotation.TV_UserAnno</Path>
+	</Bean>	
+</Beans>
